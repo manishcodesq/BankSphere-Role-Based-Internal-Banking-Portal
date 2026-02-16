@@ -23,11 +23,11 @@ const userSchema= new Schema({
   timestamps: true
 });
 
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function() {
   const user = this;
-  if (!user.isModified('password')) return next();  
+  if (!user.isModified('password')) return ;  
   this.password = await bcrypt.hash(this.password, 10);
-  next();
+ 
 });
 
 userSchema.methods.isPasswordMatch = async function(password) {
