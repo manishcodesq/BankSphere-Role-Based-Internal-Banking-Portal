@@ -27,9 +27,11 @@ app.use(express.static('public'));
 //routes import
 import userRouter from './routes/user.routes.js';
 import accountRouter from './routes/account.routes.js';
+import transactionRouter from './routes/transaction.routes.js';
 //routes declaration
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/accounts", accountRouter);
+app.use("/api/v1/transactions", transactionRouter);
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
