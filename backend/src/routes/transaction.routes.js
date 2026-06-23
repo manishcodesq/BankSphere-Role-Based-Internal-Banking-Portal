@@ -15,7 +15,7 @@ transactionRouter.route("/transfer").post(verifyJWT, transferBetweenAccounts);
 transactionRouter.route("/credit/:accountId").post(verifyJWT, creditAccount);
 transactionRouter.route("/debit/:accountId").post(verifyJWT, debitAccount);
 transactionRouter
-  .route("/:accountId")
+  .route("/history/:accountId")
   .get(verifyJWT, getAccountTransactions);
 
 export default transactionRouter;

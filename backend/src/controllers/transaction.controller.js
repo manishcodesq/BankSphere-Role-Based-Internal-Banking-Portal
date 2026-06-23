@@ -5,7 +5,15 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { Account } from "../models/account.model.js";
 import { Transaction } from "../models/transaction.model.js";
 
+const validateObjectId = (id, label = "ID") => {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new ApiError(400, `Invalid ${label}`);
+  }
+};
+
 const getOwnedAccount = async (accountId, userId) => {
+  validateObjectId(accountId, "account ID");
+
   const account = await Account.findOne({ _id: accountId, userId });
 
   if (!account) {
@@ -98,6 +106,9 @@ const transferBetweenAccounts = asyncHandler(async (req, res) => {
   if (!fromAccountId || !toAccountId) {
     throw new ApiError(400, "From and to account IDs are required");
   }
+
+  validateObjectId(fromAccountId, "from account ID");
+  validateObjectId(toAccountId, "to account ID");
 
   if (fromAccountId === toAccountId) {
     throw new ApiError(400, "Cannot transfer to the same account");
