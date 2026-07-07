@@ -16,7 +16,7 @@ export default function Login({ onLogin }) {
     setLoading(true);
 
     try {
-      const res = await API.post("/users/login", { email, password });
+      const res = await API.post("/api/v1/users/login", { email, password });
       if (res.data && res.data.success) {
         const { accessToken, user } = res.data.data;
         onLogin(accessToken, user);

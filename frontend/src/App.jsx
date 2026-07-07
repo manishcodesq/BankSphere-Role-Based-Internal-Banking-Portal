@@ -45,7 +45,7 @@ export default function App() {
 
   const logout = async () => {
     try {
-      await API.post("/users/logout");
+      await API.post("/api/v1/users/logout");
     } catch (err) {
       console.error("Logout API failed:", err);
     } finally {

@@ -18,7 +18,7 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const res = await API.post("/users/register", { name, email, password });
+      const res = await API.post("/api/v1/users/register", { name, email, password });
       if (res.data && res.data.success) {
         setSuccess(true);
         setTimeout(() => {
