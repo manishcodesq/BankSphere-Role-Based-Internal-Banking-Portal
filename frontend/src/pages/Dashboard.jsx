@@ -18,7 +18,7 @@ export default function Dashboard({ user, onLogout }) {
     setLoading(true);
     setError("");
     try {
-      const res = await API.get("/accounts/my");
+      const res = await API.get("/api/v1/accounts/my");
       if (res.data && res.data.success) {
         setAccount(res.data.data.account);
         setTransactions(res.data.data.transactions || []);
@@ -41,7 +41,7 @@ export default function Dashboard({ user, onLogout }) {
     setCreating(true);
     setError("");
     try {
-      const res = await API.post("/accounts", { accountType });
+      const res = await API.post("/api/v1/accounts", { accountType });
       if (res.data && res.data.success) {
         await loadData();
       }
