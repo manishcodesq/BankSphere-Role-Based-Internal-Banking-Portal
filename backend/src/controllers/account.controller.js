@@ -85,4 +85,22 @@ const getMyAccount = asyncHandler(async (req, res) => {
   );
 });
 
-export { createAccount, getMyAccount };
+const getAccountByNumber = asyncHandler(async (req, res) => {
+  const { accountNumber } = req.params;
+
+  if (!accountNumber || accountNumber.trim() === "") {
+    throw new ApiError(400, "Account number is required");
+  }
+
+  const account = await Account.findOne({ accountNumber }).populate("userId", "name email");
+
+  if (!account) {
+    throw new ApiError(404, "Account not found");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "Account fetched successfully", account));
+});
+
+export { createAccount, getMyAccount, getAccountByNumber };
