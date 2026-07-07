@@ -36,7 +36,7 @@ export default function TransactionForm({ accountId, refresh }) {
     setRecipientAccount(null);
 
     try {
-      const res = await API.get(`/accounts/search/${recipientNumber.trim()}`);
+      const res = await API.get(`/api/v1/accounts/search/${recipientNumber.trim()}`);
       if (res.data && res.data.success) {
         const targetAcc = res.data.data;
         
@@ -69,7 +69,7 @@ export default function TransactionForm({ accountId, refresh }) {
 
     try {
       if (tab === "DEPOSIT") {
-        const res = await API.post("/transactions", {
+        const res = await API.post("/api/v1/transactions", {
           accountId,
           type: "CREDIT",
           amount: numericAmount,
@@ -82,7 +82,7 @@ export default function TransactionForm({ accountId, refresh }) {
           refresh();
         }
       } else if (tab === "WITHDRAW") {
-        const res = await API.post("/transactions", {
+        const res = await API.post("/api/v1/transactions", {
           accountId,
           type: "DEBIT",
           amount: numericAmount,
@@ -101,7 +101,7 @@ export default function TransactionForm({ accountId, refresh }) {
           return;
         }
 
-        const res = await API.post("/transactions/transfer", {
+        const res = await API.post("/api/v1/transactions/transfer", {
           fromAccountId: accountId,
           toAccountId: recipientAccount._id,
           amount: numericAmount,
