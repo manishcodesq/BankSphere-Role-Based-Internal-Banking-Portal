@@ -18,7 +18,7 @@ export default function App() {
     }
 
     try {
-      const res = await API.get("/users/me");
+      const res = await API.get("/api/v1/users/me");
       if (res.data && res.data.success) {
         setUser(res.data.data);
       } else {
