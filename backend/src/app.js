@@ -33,6 +33,10 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/accounts", accountRouter);
 app.use("/api/v1/transactions", transactionRouter);
 
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
 
