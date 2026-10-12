@@ -20,6 +20,15 @@ const getOwnedAccount = async (accountId, userId) => {
     throw new ApiError(404, "Account not found");
   }
 
+  if (account.status && account.status !== "ACTIVE") {
+    throw new ApiError(
+      403,
+      account.status === "PENDING"
+        ? "Account is pending approval. Transactions are disabled until an administrator approves your account."
+        : "This account is not active for transactions"
+    );
+  }
+
   return account;
 };
 
@@ -135,6 +144,14 @@ const transferBetweenAccounts = asyncHandler(async (req, res) => {
 
     if (fromAccount.balance < parsedAmount) {
       throw new ApiError(400, "Insufficient balance");
+    }
+
+    if (fromAccount.status && fromAccount.status !== "ACTIVE") {
+      throw new ApiError(403, "Source account is not active for transfers");
+    }
+
+    if (toAccount.status && toAccount.status !== "ACTIVE") {
+      throw new ApiError(403, "Destination account is not active for transfers");
     }
 
     fromAccount.balance -= parsedAmount;

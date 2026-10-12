@@ -4,6 +4,7 @@ import API from "./api/api";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import AuthCallback from "./pages/AuthCallback";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -66,6 +67,16 @@ export default function App() {
   return (
     <Router>
       <Routes>
+        <Route
+          path="/auth/callback"
+          element={
+            user ? (
+              <Navigate to="/" replace />
+            ) : (
+              <AuthCallback onLogin={login} />
+            )
+          }
+        />
         <Route
           path="/login"
           element={

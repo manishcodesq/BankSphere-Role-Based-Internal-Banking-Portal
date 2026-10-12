@@ -63,7 +63,13 @@ const createAccount = asyncHandler(async (req, res) => {
 
   return res
     .status(201)
-    .json(new ApiResponse(201, "Account created successfully", createdAccount));
+    .json(
+      new ApiResponse(
+        201,
+        "Account created successfully and is pending administrator approval",
+        createdAccount
+      )
+    );
 });
 
 const getMyAccount = asyncHandler(async (req, res) => {

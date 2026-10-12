@@ -1,15 +1,12 @@
+import "./config/env.js";
 import mongoose from "mongoose";
 import express from "express";
-import dotenv from "dotenv";
 import connectDB from "./db/dbconnect.js";
 import { app } from "./app.js";
 
-dotenv.config({
-    path:'./.env'
-})
 console.log("URI RECEIVED =", process.env.MONGO_URI);
-
-
+console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID);
+console.log("GOOGLE_CLIENT_SECRET:", process.env.GOOGLE_CLIENT_SECRET ? "Present" : "Missing");
 
 connectDB()
 .then(() => {
