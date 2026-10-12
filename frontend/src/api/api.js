@@ -1,7 +1,12 @@
 import axios from "axios";
 
+export const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV ? "" : "https://banksphere-role-based-internal-banking.onrender.com");
+
 const API = axios.create({
-   baseURL: "https://banksphere-role-based-internal-banking.onrender.com",
+  baseURL: API_BASE_URL,
+  withCredentials: true,
 });
 
 API.interceptors.request.use((req) => {
@@ -11,5 +16,7 @@ API.interceptors.request.use((req) => {
   }
   return req;
 });
+
+export const googleAuthUrl = `${API_BASE_URL}/auth/google`;
 
 export default API;

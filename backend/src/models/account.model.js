@@ -18,7 +18,12 @@ const accountSchema = new Schema({
   balance: {
     type: Number,
     default: 0
-  }
+  },
+  status: {
+    type: String,
+    enum: ["PENDING", "ACTIVE", "SUSPENDED", "REJECTED"],
+    default: "PENDING",
+  },
 },{
     timestamps: true
 });

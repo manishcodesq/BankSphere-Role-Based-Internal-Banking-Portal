@@ -7,15 +7,18 @@ import {
   createTransaction,
 } from "../controllers/transaction.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
+import { authorizeRole } from "../middlewares/authorizeRole.js";
 
 const transactionRouter = express.Router();
 
-transactionRouter.route("/").post(verifyJWT, createTransaction);
-transactionRouter.route("/transfer").post(verifyJWT, transferBetweenAccounts);
-transactionRouter.route("/credit/:accountId").post(verifyJWT, creditAccount);
-transactionRouter.route("/debit/:accountId").post(verifyJWT, debitAccount);
+const customerOnly = [verifyJWT, authorizeRole("customer")];
+
+transactionRouter.route("/").post(...customerOnly, createTransaction);
+transactionRouter.route("/transfer").post(...customerOnly, transferBetweenAccounts);
+transactionRouter.route("/credit/:accountId").post(...customerOnly, creditAccount);
+transactionRouter.route("/debit/:accountId").post(...customerOnly, debitAccount);
 transactionRouter
   .route("/history/:accountId")
-  .get(verifyJWT, getAccountTransactions);
+  .get(...customerOnly, getAccountTransactions);
 
 export default transactionRouter;
